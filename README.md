@@ -22,6 +22,6 @@ State.getState().tick() 與 State.getState().render(g):
 # State
 把每一個場景拆成獨立的 Class：GameState（遊玩中）、MenuState（主選單）、HelpState（說明頁）、MapState（地圖選擇），這樣主迴圈 Game.java 只需要呼叫 State.getState().tick()，就能根據當前切換到的狀態去跑對應的邏輯，再用 public static State currentState 管理全域當前的狀態，使得新增一個新頁面完全不需要動到原本的程式架構。
 
-#Handler.java
+# Handler.java
 透過 Handler 作為統一的管道，傳遞 game、world、player 與輸入控制（KeyManager/MouseManager）。
 
