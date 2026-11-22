@@ -21,7 +21,7 @@ State.getState().tick() 與 State.getState().render(g):
 利用 Java 的 java.awt.Rectangle 實作了碰撞偵測算法。從getCollisionBound 傳入 xOffset, yOffset 預測下一幀移動後的預估位置，如果預測位置與別的 Entity 矩形相交（intersects），就代表會撞到。若物體有血量，當扣血至 health <= 0 時，將 active 改為 false 並觸發抽象方法 die()（交由子類別決定死掉是噴經驗值、放死亡動畫還是消失）搭配 EntityManager（另一個檔案）定期清理 active == false 的物件，避免無效的 Entity 佔用記憶體。
 
 # State
-把每一個場景拆成獨立的 Class：GameState（遊玩中）、MenuState（主選單）、HelpState（說明頁）、MapState（地圖選擇），這樣主迴圈 Game.java 只需要呼叫 State.getState().tick()，就能根據當前切換到的狀態去跑對應的邏輯，再用 public static State currentState 管理全域當前的狀態，使得新增一個新頁面完全不需要動到原本的程式架構。
+把每一個場景拆成獨立的 Class：GameState（遊玩中）、MenuState（主選單）、HelpState（說明頁）、MapState（地圖選擇），這樣主迴圈 Game.java 只需要呼叫 State.getState().tick()，就能根據當前切換到的狀態去跑對應的邏輯，再用 public static State currentState 管理全域當前的狀態，使得新增一個新頁面很方便。
 
 # Handler.java
 透過 Handler 作為統一的管道，傳遞 game、world、player 與輸入控制（KeyManager/MouseManager）。
