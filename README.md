@@ -15,7 +15,8 @@ State.getState().tick() 與 State.getState().render(g):
 透過多型讓 Game 不需要管現在是選單、說明頁面還是遊戲中，統一由當前 State 物件去執行各自的 tick() 與 render()，實現模組化 Decoupling。
 
 # Entity
-把玩家、怪物（creature/）跟靜態物件（staticc/ 如地板、障礙物）共同的屬性（血量 health、座標 x, y、碰撞盒 bound）抽出來做成 Entity 抽象類別，並訂立tick()、render()、die() 規範，可方便利用EntityManager維護一個 ArrayList和迴圈，更新與繪製場景上的所有東西，而不需要針對 Player 或 Enemy 分開做管理與維護。
+把玩家、怪物（creature/）跟靜態物件（staticc/ 如地板、障礙物）共同的屬性（血量 health、座標 x, y、碰撞 bound）抽出來做成 Entity 抽象類別，並訂立tick()、render()、die() 規範，可方便利用EntityManager維護一個 ArrayList和迴圈，更新與繪製場景上的所有東西，而不需要針對 Player 或 Enemy 分開做管理與維護。
+
 碰撞機制:
 利用 Java 的 java.awt.Rectangle 實作了碰撞偵測算法。從getCollisionBound 傳入 xOffset, yOffset 預測下一幀移動後的預估位置，如果預測位置與別的 Entity 矩形相交（intersects），就代表會撞到。若物體有血量，當扣血至 health <= 0 時，將 active 改為 false 並觸發抽象方法 die()（交由子類別決定死掉是噴經驗值、放死亡動畫還是消失）搭配 EntityManager（另一個檔案）定期清理 active == false 的物件，避免無效的 Entity 佔用記憶體。
 
